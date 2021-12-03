@@ -1,18 +1,26 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.icebuf.dependencymanager</id>
+    <id>com.github.icebuf.dependview</id>
     <name>DependencyManager</name>
     <vendor>icebuf</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+    <depends>org.intellij.groovy</depends>
+    <depends>com.intellij.gradle</depends>
+    <depends>org.jetbrains.android</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.icebuf.dependencymanager.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.icebuf.dependencymanager.services.MyProjectService"/>
+        <applicationService serviceImplementation="com.github.icebuf.dependview.services.MyApplicationService"/>
+        <projectService serviceImplementation="com.github.icebuf.dependview.services.MyProjectService"/>
+        <toolWindow id="DependencyManager" anchor="right" secondary="true" factoryClass="com.github.icebuf.dependview.DependManToolWindow" />
+<!--        <codeInsight.lineMarkerProvider implementationClass="com.github.icebuf.dependview.DependencyLineMarkerProvider"/>-->
+        <lang.foldingBuilder language="JAVA" implementationClass="com.github.icebuf.dependview.SimpleFoldingBuilder"/>
+        <lang.foldingBuilder language="Groovy" implementationClass="com.github.icebuf.dependview.DependencyFoldingBuilder"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.icebuf.dependencymanager.listeners.MyProjectManagerListener"
+        <listener class="com.github.icebuf.dependview.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 </idea-plugin>

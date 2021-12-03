@@ -1,4 +1,5 @@
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.kotlin.gradle.plugin.statistics.ReportStatisticsToElasticSearch.url
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -9,7 +10,7 @@ plugins {
     // Kotlin support
     id("org.jetbrains.kotlin.jvm") version "1.5.30"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.1.6"
+    id("org.jetbrains.intellij") version "1.3.0"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.0"
     // Gradle Qodana Plugin
@@ -21,8 +22,17 @@ version = properties("pluginVersion")
 
 // Configure project's dependencies
 repositories {
+    maven("https://plugins.gradle.org/m2/")
     mavenCentral()
 }
+
+// Include the generated files in the source set
+sourceSets.main {
+    java.srcDirs("src/main/gen")
+}
+
+
+
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
