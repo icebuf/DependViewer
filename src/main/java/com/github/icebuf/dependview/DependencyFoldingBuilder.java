@@ -25,10 +25,9 @@ public class DependencyFoldingBuilder extends FoldingBuilderEx {
     @Override
     public FoldingDescriptor @NotNull [] buildFoldRegions(@NotNull PsiElement root, @NotNull Document document, boolean quick) {
         FoldingModelEx foldingModel;
-        Intrinsics.checkParameterIsNotNull(root, "root");
-        Intrinsics.checkParameterIsNotNull(document, "document");
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        Editor editor = (Editor) ArraysKt.firstOrNull((Object[]) EditorFactory.getInstance().getEditors(document));
+        Editor[] editors = EditorFactory.getInstance().getEditors(document);
+        Editor editor = ArraysKt.firstOrNull(editors);
         FoldingModel foldingModel2 = editor != null ? editor.getFoldingModel() : null;
         if (foldingModel2 instanceof FoldingBuilderEx) {
             foldingModel = (FoldingModelEx) foldingModel2;
